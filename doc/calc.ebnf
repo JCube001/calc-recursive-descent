@@ -1,0 +1,12 @@
+start = expression;
+
+expression = term {["+" | "-"] term};
+
+term = factor {["*" | "/"] factor};
+
+factor = number
+       | "(" expression ")"
+       | ["+" | "-"] factor
+       ;
+
+number = ? C type double ?;
