@@ -11,7 +11,7 @@ std::unique_ptr<Ast::Expression> Parser::operator()()
 {
     auto tree = expression();
 
-    if (!check(Token::ID::Eof)) {
+    if (!match(ID::Eof)) {
         throw std::runtime_error("Junk at end of expression");
     }
 
@@ -22,9 +22,8 @@ std::unique_ptr<Ast::Expression> Parser::expression()
 {
     auto tree = term();
 
-    while (check(ID::Plus) || check(ID::Minus)) {
+    while (match(ID::Plus, ID::Minus)) {
         auto op = binaryOperator();
-        next();
         op->left = std::move(tree);
         op->right = term();
         tree = std::move(op);
@@ -37,9 +36,8 @@ std::unique_ptr<Ast::Expression> Parser::term()
 {
     auto tree = factor();
 
-    while (check(ID::Times) || check(ID::Divide)) {
+    while (match(ID::Times, ID::Divide)) {
         auto op = binaryOperator();
-        next();
         op->left = std::move(tree);
         op->right = factor();
         tree = std::move(op);
@@ -52,17 +50,16 @@ std::unique_ptr<Ast::Expression> Parser::factor()
 {
     std::unique_ptr<Ast::Expression> tree;
 
-    if (check(Token::ID::Number)) {
+    if (match(ID::Number)) {
         tree = number();
-        next();
-    } else if (accept(Token::ID::LParen)) {
+    } else if (accept(ID::LParen)) {
         tree = expression();
-        if (!accept(Token::ID::RParen)) {
+        if (!accept(ID::RParen)) {
             throw std::runtime_error("Expected closing ')'");
         }
-    } else if (accept(Token::ID::Plus)) {
+    } else if (accept(ID::Plus)) {
         tree = expression();
-    } else if (accept(Token::ID::Minus)) {
+    } else if (accept(ID::Minus)) {
         auto negation = std::make_unique<Ast::NegationOperator>();
         negation->right = factor();
         tree = std::move(negation);
@@ -75,12 +72,18 @@ std::unique_ptr<Ast::Expression> Parser::factor()
 
 std::unique_ptr<Ast::Number> Parser::number()
 {
-    return std::make_unique<Ast::Number>(token.value);
+    auto tree = std::make_unique<Ast::Number>(token.value);
+    next();
+    return tree;
 }
 
 std::unique_ptr<Ast::BinaryOperator> Parser::binaryOperator()
 {
-    switch (token.id) {
+    const auto id = token.id;
+
+    next();
+
+    switch (id) {
     case ID::Plus:
         return std::make_unique<Ast::AdditionOperator>();
     case ID::Minus:

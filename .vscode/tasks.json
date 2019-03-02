@@ -10,26 +10,16 @@
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
-            "args": [
-                "-G",
-                "\"Ninja\""
-            ],
+            "args": ["-G", "Ninja"],
             "windows": {
-                "args": [
-                    "-G",
-                    "\"Visual Studio 15 2017 Win64\"",
-                    ".."
-                ]
+                "args": ["-G", "Visual Studio 15 2017 Win64", ".."]
             }
         },
         {
-            "label": "Build (Default)",
+            "label": "Build (Debug)",
             "type": "process",
             "command": "cmake",
-            "args": [
-                "--build",
-                "."
-            ],
+            "args": ["--build", ".", "--config", "Debug"],
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
@@ -39,69 +29,55 @@
             }
         },
         {
-            "label": "Build (Debug)",
+            "label": "Build (Release)",
             "type": "process",
             "command": "cmake",
-            "args": [
-                "--build",
-                ".",
-                "--config",
-                "Debug"
-            ],
+            "args": ["--build", ".", "--config", "Release"],
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
             "group": "build"
         },
         {
-            "label": "Build (Release)",
+            "label": "Clean (Debug)",
             "type": "process",
             "command": "cmake",
-            "args": [
-                "--build",
-                ".",
-                "--config",
-                "Release"
-            ],
+            "args": ["--build", ".", "--config", "Debug", "--target", "clean"],
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
-            "group": "build"
+        },
+        {
+            "label": "Clean (Release)",
+            "type": "process",
+            "command": "cmake",
+            "args": ["--build", ".", "--config", "Release", "--target", "clean"],
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
         },
         {
             "label": "Test (Debug)",
             "type": "process",
             "command": "ctest",
-            "args": [
-                "-C",
-                "Debug"
-            ],
+            "args": ["-C", "Debug", "--output-on-failure"],
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
             "group": {
                 "kind": "test",
                 "isDefault": true
-            },
-            "dependsOn": [
-                "Build (Debug)"
-            ]
+            }
         },
         {
             "label": "Test (Release)",
             "type": "process",
             "command": "ctest",
-            "args": [
-                "-C",
-                "Release"
-            ],
+            "args": ["-C", "Release", "--output-on-failure"],
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
-            "group": "test",
-            "dependsOn": [
-                "Build (Release)"
-            ]
+            "group": "test"
         }
     ]
 }

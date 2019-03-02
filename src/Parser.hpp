@@ -3,6 +3,7 @@
 
 #include "Calc/Calc.hpp"
 #include "Lexer.hpp"
+#include <type_traits>
 
 namespace Calc {
 
@@ -27,14 +28,16 @@ private:
 
     std::unique_ptr<Ast::BinaryOperator> binaryOperator();
 
-    bool check(const Token::ID id)
+    template<class... Args>
+    std::enable_if_t<std::conjunction_v<std::is_same<Token::ID, Args>...>, bool>
+    match(const Args... args)
     {
-        return id == token.id;
+        return (... || (args == token.id));
     }
 
     bool accept(const Token::ID id)
     {
-        if (check(id)) {
+        if (match(id)) {
             next();
             return true;
         }
