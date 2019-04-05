@@ -23,10 +23,10 @@ std::unique_ptr<Ast::Expression> Parser::expression()
     auto tree = term();
 
     while (match(ID::Plus, ID::Minus)) {
-        auto op = binaryOperator();
-        op->left = std::move(tree);
-        op->right = term();
-        tree = std::move(op);
+        auto subtree = binaryOperator();
+        subtree->left = std::move(tree);
+        subtree->right = term();
+        tree = std::move(subtree);
     }
 
     return tree;
@@ -37,10 +37,10 @@ std::unique_ptr<Ast::Expression> Parser::term()
     auto tree = factor();
 
     while (match(ID::Times, ID::Divide)) {
-        auto op = binaryOperator();
-        op->left = std::move(tree);
-        op->right = factor();
-        tree = std::move(op);
+        auto subtree = binaryOperator();
+        subtree->left = std::move(tree);
+        subtree->right = factor();
+        tree = std::move(subtree);
     }
 
     return tree;

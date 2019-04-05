@@ -9,9 +9,8 @@ namespace Calc {
 class Lexer
 {
 public:
-    Lexer(std::string_view text)
-        : buffer(text)
-        , cursor(buffer.data())
+    Lexer(const std::string_view& buffer)
+        : cursor(buffer.data())
         , marker(cursor)
         , lexeme(cursor)
     {}
@@ -19,7 +18,6 @@ public:
     Token operator()();
 
 private:
-    std::string_view buffer;
     std::string_view::const_pointer cursor;
     std::string_view::const_pointer marker;
     std::string_view::const_pointer lexeme;

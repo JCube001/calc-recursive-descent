@@ -3,14 +3,13 @@
 
 #include "Calc/Calc.hpp"
 #include "Lexer.hpp"
-#include <type_traits>
 
 namespace Calc {
 
 class Parser
 {
 public:
-    Parser(std::string_view text)
+    Parser(const std::string_view& text)
         : lex(text)
         , token(lex())
     {}
@@ -28,11 +27,14 @@ private:
 
     std::unique_ptr<Ast::BinaryOperator> binaryOperator();
 
-    template<class... Args>
-    std::enable_if_t<std::conjunction_v<std::is_same<Token::ID, Args>...>, bool>
-    match(const Args... args)
+    bool match(const Token::ID id)
     {
-        return (... || (args == token.id));
+        return id == token.id;
+    }
+
+    bool match(const Token::ID low, const Token::ID high)
+    {
+        return (low <= token.id) && (token.id <= high);
     }
 
     bool accept(const Token::ID id)
