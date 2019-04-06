@@ -23,6 +23,8 @@ private:
 
     std::unique_ptr<Ast::Expression> factor();
 
+    std::unique_ptr<Ast::Expression> exponent();
+
     std::unique_ptr<Ast::Number> number();
 
     std::unique_ptr<Ast::BinaryOperator> binaryOperator();

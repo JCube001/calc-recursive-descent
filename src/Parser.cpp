@@ -48,6 +48,20 @@ std::unique_ptr<Ast::Expression> Parser::term()
 
 std::unique_ptr<Ast::Expression> Parser::factor()
 {
+    auto tree = exponent();
+
+    if (match(ID::Exponent)) {
+        auto subtree = binaryOperator();
+        subtree->left = std::move(tree);
+        subtree->right = factor();
+        tree = std::move(subtree);
+    }
+
+    return tree;
+}
+
+std::unique_ptr<Ast::Expression> Parser::exponent()
+{
     std::unique_ptr<Ast::Expression> tree;
 
     if (match(ID::Number)) {
@@ -92,6 +106,8 @@ std::unique_ptr<Ast::BinaryOperator> Parser::binaryOperator()
         return std::make_unique<Ast::MultiplicationOperator>();
     case ID::Divide:
         return std::make_unique<Ast::DivisionOperator>();
+    case ID::Exponent:
+        return std::make_unique<Ast::PowerOperator>();
     default:
         throw std::logic_error("Calc::Parser expected a binary operator");
     }

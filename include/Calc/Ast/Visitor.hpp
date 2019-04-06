@@ -10,6 +10,7 @@ struct AdditionOperator;
 struct SubtractionOperator;
 struct MultiplicationOperator;
 struct DivisionOperator;
+struct PowerOperator;
 
 struct Visitor
 {
@@ -26,6 +27,8 @@ struct Visitor
     virtual void visit(MultiplicationOperator& multiplication) = 0;
 
     virtual void visit(DivisionOperator& division) = 0;
+
+    virtual void visit(PowerOperator& power) = 0;
 };
 
 } // namespace Ast

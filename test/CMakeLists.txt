@@ -3,6 +3,7 @@ add_executable(calc-test main.cpp
     division.cpp
     multiplication.cpp
     order_of_operations.cpp
+    power.cpp
     subtraction.cpp
     syntax_error.cpp
 )

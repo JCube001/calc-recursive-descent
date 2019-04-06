@@ -4,9 +4,11 @@ expression = term {["+" | "-"] term};
 
 term = factor {["*" | "/"] factor};
 
-factor = number
+factor = exponent {"^" exponent};
+
+exponent = number
        | "(" expression ")"
-       | ["+" | "-"] factor
+       | ["+" | "-"] exponent
        ;
 
 number = ? C type double ?;

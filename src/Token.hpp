@@ -12,6 +12,7 @@ struct Token
         Minus,
         Times,
         Divide,
+        Exponent,
         LParen,
         RParen,
         Number

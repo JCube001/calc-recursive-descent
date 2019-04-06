@@ -74,6 +74,14 @@ struct DivisionOperator final : public BinaryOperator
     }
 };
 
+struct PowerOperator final : public BinaryOperator
+{
+    void accept(Visitor& visitor) override
+    {
+        visitor.visit(*this);
+    }
+};
+
 } // namespace Ast
 } // namespace Calc
 

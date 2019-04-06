@@ -5,6 +5,7 @@
 #include <functional>
 #include <stack>
 #include <vector>
+#include <cmath>
 
 namespace Calc {
 
@@ -45,6 +46,13 @@ public:
     void visit(Ast::DivisionOperator& division) override
     {
         solve(division, std::divides<double>());
+    }
+
+    void visit(Ast::PowerOperator& power) override
+    {
+        solve(power, [](const double base, const double exponent) {
+            return std::pow(base, exponent);
+        });
     }
 
 private:

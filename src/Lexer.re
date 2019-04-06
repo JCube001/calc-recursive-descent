@@ -33,6 +33,7 @@ Token Lexer::operator()()
             "-" { return {ID::Minus}; }
             "*" { return {ID::Times}; }
             "/" { return {ID::Divide}; }
+            "^" { return {ID::Exponent}; }
             "(" { return {ID::LParen}; }
             ")" { return {ID::RParen}; }
 
