@@ -9,7 +9,7 @@ namespace Calc {
 class Parser
 {
 public:
-    Parser(const std::string_view& text)
+    Parser(std::string_view text)
         : lex(text)
         , token(lex())
     {}

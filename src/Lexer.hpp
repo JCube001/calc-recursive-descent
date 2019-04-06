@@ -9,7 +9,7 @@ namespace Calc {
 class Lexer
 {
 public:
-    Lexer(const std::string_view& buffer)
+    Lexer(std::string_view buffer)
         : cursor(buffer.data())
         , marker(cursor)
         , lexeme(cursor)

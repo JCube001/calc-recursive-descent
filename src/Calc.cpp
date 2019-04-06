@@ -5,12 +5,12 @@
 
 namespace Calc {
 
-std::unique_ptr<Ast::Expression> parse(const std::string_view& text)
+std::unique_ptr<Ast::Expression> parse(std::string_view text)
 {
     return Parser(text)();
 }
 
-double evaluate(const std::string_view& text)
+double evaluate(std::string_view text)
 {
     Solver solver;
 
