@@ -3,7 +3,7 @@
 
 using namespace Calc;
 
-SCENARIO("The parser shall produce correct multiplication results", "[calc][operator][mul]") {
+SCENARIO("The evaluator shall produce correct multiplication results", "[calc][op][mul]") {
     CHECK(evaluate("0 * 0") == Approx(0));
     CHECK(evaluate("0 * 1") == Approx(0));
     CHECK(evaluate("1 * 0") == Approx(0));

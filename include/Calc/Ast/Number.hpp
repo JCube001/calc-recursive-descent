@@ -2,7 +2,6 @@
 #define CALC_AST_NUMBER_HPP
 
 #include <Calc/Ast/Expression.hpp>
-#include <Calc/Ast/Visitor.hpp>
 
 namespace Calc {
 namespace Ast {
@@ -10,7 +9,7 @@ namespace Ast {
 struct Number final : public Expression
 {
     Number(const double value)
-        : value(value)
+        : value{value}
     {}
 
     void accept(Visitor& visitor) override

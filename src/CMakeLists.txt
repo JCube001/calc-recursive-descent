@@ -7,24 +7,7 @@ endif()
 
 configure_file(config.hpp.in config.hpp @ONLY)
 
-find_program(CALC_RE2C re2c)
-
-set(LEXER_IN ${CMAKE_CURRENT_SOURCE_DIR}/Lexer.re)
-set(LEXER_OUT ${CMAKE_CURRENT_BINARY_DIR}/Lexer.cpp)
-
-add_custom_command(
-OUTPUT
-    ${LEXER_OUT}
-COMMAND
-    ${CALC_RE2C} -o ${LEXER_OUT} ${LEXER_IN}
-MAIN_DEPENDENCY
-    ${LEXER_IN}
-COMMENT
-    "Generating lexer"
-VERBATIM
-)
-
-add_library(calc STATIC ${LEXER_OUT} Calc.cpp Parser.cpp)
+add_library(calc STATIC Calc.cpp Evaluator.cpp Lexer.cpp Parser.cpp)
 target_compile_features(calc PUBLIC cxx_std_17)
 
 target_include_directories(calc

@@ -7,7 +7,8 @@ struct Token
 {
     enum class ID
     {
-        Eof = 0,
+        Unknown,
+        Eof,
         Plus,
         Minus,
         Times,

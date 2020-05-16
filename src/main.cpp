@@ -1,8 +1,22 @@
 #include "Calc/Calc.hpp"
 #include "config.hpp"
-#include <exception>
+#include <algorithm>
 #include <iostream>
+#include <stdexcept>
 #include <string>
+#include <cctype>
+
+namespace {
+
+// https://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
+void trimRight(std::string& s)
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+} // namespace
 
 int main()
 {
@@ -16,16 +30,19 @@ int main()
         std::getline(std::cin, line);
         if (!std::cin) {
             break;
-        } else if (line.empty()) {
+        }
+
+        trimRight(line);
+        if (line.empty()) {
             continue;
         }
 
         try {
             std::cout << Calc::evaluate(line) << '\n';
-        } catch (const std::exception& e) {
-            std::cerr << e.what() << '\n';
+        } catch (const Calc::SyntaxError& e) {
+            std::cerr << "Error: " << e.what() << '\n';
         }
     }
 
-    std::cout << "Bye!\n";
+    std::cout << "\nBye!\n";
 }

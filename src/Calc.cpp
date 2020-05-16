@@ -1,26 +1,30 @@
 #include "Calc/Calc.hpp"
+
+#include "Evaluator.hpp"
 #include "Parser.hpp"
-#include "Solver.hpp"
-#include <stdexcept>
+#include <sstream>
 
 namespace Calc {
 
-std::unique_ptr<Ast::Expression> parse(std::string_view text)
+std::unique_ptr<Ast::Expression> parse(std::istream& stream)
 {
-    return Parser(text)();
+    return Parser{stream}();
 }
 
-double evaluate(std::string_view text)
+double evaluate(std::istream& stream)
 {
-    Solver solver;
+    auto expression = parse(stream);
 
-    auto ast = parse(text);
-    if (!ast) {
-        throw std::runtime_error("Missing expression");
-    }
+    Evaluator eval;
+    expression->accept(eval);
 
-    ast->accept(solver);
-    return solver.getResult();
+    return eval.getResult();
+}
+
+double evaluate(const std::string& code)
+{
+    std::istringstream stream{code};
+    return evaluate(stream);
 }
 
 } // namespace Calc

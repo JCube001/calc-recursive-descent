@@ -3,7 +3,7 @@
 
 using namespace Calc;
 
-SCENARIO("The parser shall produce correct division results", "[calc][operator][div]") {
+SCENARIO("The evaluator shall produce correct division results", "[calc][op][div]") {
     CHECK(evaluate("0 / 1") == Approx(0));
     CHECK(evaluate("1 / 1") == Approx(1));
     CHECK(evaluate("1 / 2") == Approx(0.5));

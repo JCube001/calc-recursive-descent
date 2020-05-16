@@ -3,7 +3,7 @@
 
 using namespace Calc;
 
-SCENARIO("The parser shall produce correct power results", "[calc][operator][pow]") {
+SCENARIO("The evaluator shall produce correct power results", "[calc][op][pow]") {
     CHECK(evaluate("1 ^ 0") == Approx(1));
     CHECK(evaluate("1 ^ 1") == Approx(1));
     CHECK(evaluate("1 ^ 2") == Approx(1));

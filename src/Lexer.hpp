@@ -2,25 +2,21 @@
 #define CALC_LEXER_HPP
 
 #include "Token.hpp"
-#include <string_view>
+#include <istream>
 
 namespace Calc {
 
 class Lexer
 {
 public:
-    Lexer(std::string_view buffer)
-        : cursor(buffer.data())
-        , marker(cursor)
-        , lexeme(cursor)
+    Lexer(std::istream& stream)
+        : stream{stream}
     {}
 
     Token operator()();
 
 private:
-    std::string_view::const_pointer cursor;
-    std::string_view::const_pointer marker;
-    std::string_view::const_pointer lexeme;
+    std::istream& stream;
 };
 
 } // namespace Calc

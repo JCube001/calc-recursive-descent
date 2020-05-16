@@ -1,14 +1,25 @@
-start = expression;
+start
+    = expression
+    ;
 
-expression = term {["+" | "-"] term};
+expression
+    = term {("+" | "-") term}
+    ;
 
-term = factor {["*" | "/"] factor};
+term
+    = factor {("*" | "/") factor}
+    ;
 
-factor = exponent {"^" exponent};
+factor
+    = exponent {"^" exponent}
+    ;
 
-exponent = number
-       | "(" expression ")"
-       | ["+" | "-"] exponent
-       ;
+exponent
+    = "(" expression ")"
+    | ("+" | "-") exponent
+    | number
+    ;
 
-number = ? C type double ?;
+number
+    = ? C type double ?
+    ;
